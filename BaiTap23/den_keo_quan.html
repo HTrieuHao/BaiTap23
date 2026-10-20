@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đèn Kéo Quân - Bài tập 23</title>
+    <style>
+        body {
+            margin: 0;
+            background: radial-gradient(circle, #1a2a3a, #0b131b);
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            margin-top: 20px;
+            z-index: 10;
+        }
+        .back-link {
+            color: #2ecc71;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        /* Không gian 3D */
+        .scene {
+            width: 240px;
+            height: 300px;
+            perspective: 1000px;
+            margin-top: 90px;
+        }
+        /* Khung đèn kéo quân */
+        .lantern {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+        /* 6 mặt của đèn */
+        .face {
+            position: absolute;
+            width: 220px;
+            height: 280px;
+            left: 10px;
+            top: 10px;
+            border: 4px solid #f1c40f;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(241, 196, 15, 0.5);
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.7);
+            cursor: pointer;
+            transition: box-shadow 0.3s, border-color 0.3s;
+        }
+        .face:hover {
+            border-color: #2ecc71;
+            box-shadow: 0 0 30px rgba(46, 204, 113, 0.9);
+        }
+        .face img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        /* Xếp 6 mặt thành hình lục giác (mỗi mặt lệch nhau 60 độ) */
+        .face:nth-child(1) { transform: rotateY(0deg) translateZ(230px); }
+        .face:nth-child(2) { transform: rotateY(60deg) translateZ(230px); }
+        .face:nth-child(3) { transform: rotateY(120deg) translateZ(230px); }
+        .face:nth-child(4) { transform: rotateY(180deg) translateZ(230px); }
+        .face:nth-child(5) { transform: rotateY(240deg) translateZ(230px); }
+        .face:nth-child(6) { transform: rotateY(300deg) translateZ(230px); }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <a href="index.html" class="back-link">⬅ Quay lại Trang chủ</a>
+        <h2>🏮 ĐÈN KÉO QUÂN JAVASCRIPT 🏮</h2>
+        <p>Họ tên: <strong>Huỳnh Triệu Hào</strong> - MSSV: <strong>231A290088</strong></p>
+        <p><em>(Đưa chuột vào ảnh để dừng đèn, rê chuột ra để đèn quay tiếp)</em></p>
+    </div>
+
+    <div class="scene">
+        <div class="lantern" id="lantern">
+            <div class="face"><img src="images/anh1.jpg" alt="Hình 1"></div>
+            <div class="face"><img src="images/anh2.jpg" alt="Hình 2"></div>
+            <div class="face"><img src="images/anh3.jpg" alt="Hình 3"></div>
+            <div class="face"><img src="images/anh4.jpg" alt="Hình 4"></div>
+            <div class="face"><img src="images/anh5.jpg" alt="Hình 5"></div>
+            <div class="face"><img src="images/anh6.jpg" alt="Hình 6"></div>
+        </div>
+    </div>
+
+    <script>
+        const lantern = document.getElementById('lantern');
+        const faces = document.querySelectorAll('.face');
+        
+        let angle = 0;
+        let isPaused = false;
+
+        function rotateLantern() {
+            if (!isPaused) {
+                angle += 0.5; 
+                lantern.style.transform = `rotateY(${angle}deg)`;
+            }
+            requestAnimationFrame(rotateLantern);
+        }
+
+        faces.forEach(face => {
+            face.addEventListener('mouseenter', () => {
+                isPaused = true;
+            });
+            face.addEventListener('mouseleave', () => {
+                isPaused = false;
+            });
+        });
+
+        rotateLantern();
+    </script>
+</body>
+</html>
